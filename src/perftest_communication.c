@@ -16,6 +16,7 @@
 #include <netdb.h>
 #include "perftest_communication.h"
 #include "host_memory.h"
+#include <infiniband/driver.h>
 #ifdef HAVE_SRD
 #include <infiniband/efadv.h>
 #endif
