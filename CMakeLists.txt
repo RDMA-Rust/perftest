@@ -64,6 +64,8 @@ endif()
 configure_file(config.cmake.h.in config.h @ONLY)
 add_definitions("-DHAVE_CONFIG_H")
 
+add_definitions("-D_GNU_SOURCE")
+
 find_package(Threads REQUIRED)
 add_subdirectory(thirdparty/rdma-core-mummy)
 

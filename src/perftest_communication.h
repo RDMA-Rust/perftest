@@ -40,6 +40,7 @@
 #define PERFTEST_COMMUNICATION_H
 
 #include <netinet/in.h>
+#include <infiniband/driver.h>
 #include <infiniband/verbs.h>
 #include <rdma/rdma_cma.h>
 #include "perftest_resources.h"

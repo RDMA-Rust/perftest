@@ -622,7 +622,7 @@ static int get_best_gid_index (struct pingpong_context *ctx,
 			}
 
 #else
-			enum ibv_gid_type roce_version, roce_version_rival;
+			enum ibv_gid_type_sysfs roce_version, roce_version_rival;
 
 			if (ibv_query_gid_type(ctx->context, port, gid_index, &roce_version))
 				continue;
