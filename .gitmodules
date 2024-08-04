@@ -1,0 +1,3 @@
+[submodule "thirdparty/rdma-core-mummy"]
+	path = thirdparty/rdma-core-mummy
+	url = https://github.com/RDMA-Rust/rdma-core-mummy
