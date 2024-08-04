@@ -1,0 +1,18 @@
+compute_engine_instance:
+  image_project: rocky-linux-cloud
+  image: family/rocky-linux-9
+
+env:
+  CIRRUS_CLONE_SUBMODULES: true
+
+task:
+  prepare_script: 
+    - dnf install -y cmake librdmacm libibverbs gcc pciutils-devel libibumad-devel
+    - rdma link add rxe_eth0 type rxe netdev eth0
+  build_script:
+    - mkdir build && cd build
+    - cmake ..
+    - make
+  test_script: Use perftest to test RXE loopback
+    - ./ib_write_bw -d rxe_eth0 &
+    - ./ib_write_bw -d rxe_eth0 127.0.0.1
