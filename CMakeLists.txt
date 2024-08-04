@@ -65,7 +65,7 @@ configure_file(config.cmake.h.in config.h @ONLY)
 add_definitions("-DHAVE_CONFIG_H")
 
 find_package(Threads REQUIRED)
-
+add_subdirectory(thirdparty/rdma-core-mummy)
 
 add_library(perftest STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/get_clock.c
