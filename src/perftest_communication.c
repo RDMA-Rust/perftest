@@ -538,18 +538,6 @@ static int rdma_read_keys(struct pingpong_dest *rem_dest,
 }
 
 #ifdef HAVE_GID_TYPE
-#ifndef HAVE_GID_TYPE_DECLARED
-enum ibv_gid_type
-{
-	IBV_GID_TYPE_IB_ROCE_V1,
-	IBV_GID_TYPE_ROCE_V2,
-};
-
-int ibv_query_gid_type(struct ibv_context *context, uint8_t port_num,
-	unsigned int index, enum ibv_gid_type *type);
-
-#endif
-
 enum who_is_better {LEFT_IS_BETTER, EQUAL, RIGHT_IS_BETTER};
 
 struct roce_version_sorted_enum {
@@ -559,11 +547,6 @@ struct roce_version_sorted_enum {
 
 /* This struct defines which RoCE version is more important for default usage */
 #ifndef HAVE_GID_TYPE_DECLARED
-struct roce_version_sorted_enum roce_versions_sorted[] = {
-	{IBV_GID_TYPE_IB_ROCE_V1, 1},
-	{IBV_GID_TYPE_ROCE_V2, 2},
-};
-#else
 struct roce_version_sorted_enum roce_versions_sorted[] = {
 	{IBV_GID_TYPE_ROCE_V1, 1},
 	{IBV_GID_TYPE_ROCE_V2, 2},
