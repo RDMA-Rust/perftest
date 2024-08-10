@@ -542,19 +542,24 @@ static int rdma_read_keys(struct pingpong_dest *rem_dest,
 enum who_is_better {LEFT_IS_BETTER, EQUAL, RIGHT_IS_BETTER};
 
 struct roce_version_sorted_enum {
-	enum ibv_gid_type type;
+	int type; // generic type for both ibv_gid_type and ibv_gid_type_sysfs
 	int rate;
 };
 
 /* This struct defines which RoCE version is more important for default usage */
 #ifndef HAVE_GID_TYPE_DECLARED
 struct roce_version_sorted_enum roce_versions_sorted[] = {
+	{IBV_GID_TYPE_SYSFS_IB_ROCE_V1, 1},
+	{IBV_GID_TYPE_SYSFS_ROCE_V2, 2},
+};
+#else
+struct roce_version_sorted_enum roce_versions_sorted[] = {
 	{IBV_GID_TYPE_ROCE_V1, 1},
 	{IBV_GID_TYPE_ROCE_V2, 2},
 };
 #endif
 
-int find_roce_version_rate(enum ibv_gid_type roce_ver) {
+int find_roce_version_rate(int roce_ver) {
 	int i;
 	int arr_len = GET_ARRAY_SIZE(roce_versions_sorted);
 
@@ -568,7 +573,7 @@ int find_roce_version_rate(enum ibv_gid_type roce_ver) {
 
 /* RoCE V2 > V1
  * other RoCE versions will be ignored until added to roce_versions_sorted array */
-static int check_better_roce_version(enum ibv_gid_type roce_ver, enum ibv_gid_type roce_ver_rival)
+static int check_better_roce_version(int roce_ver, int roce_ver_rival)
 {
 	int roce_ver_rate = find_roce_version_rate(roce_ver);
 	int roce_ver_rate_rival = find_roce_version_rate(roce_ver_rival);
@@ -623,7 +628,7 @@ static int get_best_gid_index (struct pingpong_context *ctx,
 			}
 
 #else
-			enum ibv_gid_type roce_version, roce_version_rival;
+			enum ibv_gid_type_sysfs roce_version, roce_version_rival;
 
 			if (ibv_query_gid_type(ctx->context, port, gid_index, &roce_version))
 				continue;
