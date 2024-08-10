@@ -18,6 +18,9 @@ jobs:
       - name: Setup Ninja
         uses: seanmiddleditch/gha-setup-ninja@v4
 
+      - name: Install compile dependencies
+        run: sudo apt update && sudo apt install -y libpci-dev
+
       - name: Configure and build (Clang)
         uses: threeal/cmake-action@main
         with:
